@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function (req, res) {
-  res.render("index", {appType : "Express"});
+  res.json({
+    message:'Home directory'
+  });
 });
 
 module.exports = router;
