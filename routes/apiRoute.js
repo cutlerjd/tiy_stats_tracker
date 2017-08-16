@@ -47,7 +47,40 @@ router.put('/activities/:id', function(req,res,next){
     })
 })
 // DELETE	/activities/{id}	Delete one activity I am tracking. This should remove tracked data for that activity as well.
+router.delete('/activities/:id', function(req,res,next){
+    let id_act = req.params.id
+    let activity = Activity.deleteActivity(res.locals.id_user,id_act)
+    activity.then(function(data){
+        res.json(data)
+    })
+    .catch(function(data){
+        res.json(data)
+    })
+})
 // POST	/activities/{id}/stats	Add tracked data for a day. The data sent with this should include the day tracked. You can also override the data for a day already recorded.
+router.post('/activities/:id/stats', function(req,res,next){
+    let id_act = req.params.id
+    let date = req.body.date
+    let count = req.body.count
+    let override = req.body.override
+    let activity = Activity.postActivity(res.locals.id_user,id_act,date,count,override)
+    activity.then(function(data){
+        res.json(data)
+    })
+    .catch(function(data){
+        res.json(data)
+    })
+})
 // DELETE	/stats/{id}	Remove tracked data for a day.
-
+router.delete('/activities/:id/stats', function(req,res,next){
+    let id_act = req.params.id
+    let date = req.body.date
+    let activity = Activity.deleteActivity(res.locals.id_user,id_act,date)
+    activity.then(function(data){
+        res.json(data)
+    })
+    .catch(function(data){
+        res.json(data)
+    })
+})
 module.exports = router;
