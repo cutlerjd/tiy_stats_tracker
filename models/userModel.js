@@ -110,9 +110,9 @@ function getNewToken(username, password) {
 function verifyToken(token){
     return new Promise(function(resolve,reject){
         let sql = `
-        SELECT token
+        SELECT *
         FROM tokens
-        WHERE token = ?`
+        WHERE token = ? AND active=1`
         conn.query(sql,[token],function(err,results,fields){
             if(err){
                 reject({
@@ -126,15 +126,13 @@ function verifyToken(token){
                         message:'Valid token not present'
                     })
                 }else{
-                    resolve(true)
+                    resolve(results[0])
                 }
             }
         })
     })
 }
-verified = verifyToken('9914d8a6-1d6d-43f0-9e0b-7d29ef3a8125')
-verified.then(console.log)
-.catch(console.log)
+
 module.exports = {
     createUser: createUser,
     getNewToken: getNewToken,
