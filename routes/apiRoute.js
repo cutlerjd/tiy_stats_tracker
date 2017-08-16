@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router()
 
+const Activity = require('../models/activityModel')
 // GET	/activities	Show a list of all activities I am tracking, and links to their individual pages
 router.get('/activities', function(req,res,next){
-    res.json({
-        message:'Insert activites here'
+    let activity = Activity.getActivities(res.locals.id_user)
+    activity.then(function(data){
+        res.json(data)
+    })
+    .catch(function(data){
+        res.json(data)
     })
 })
 // POST	/activities	Create a new activity for me to track.
